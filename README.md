@@ -64,7 +64,9 @@ It supports JSON requests and includes a clean route structure for easy expansio
 ```
 
 ---
-![Uploading image.png…]()
+<img width="1797" height="858" alt="image" src="https://github.com/user-attachments/assets/ec923c39-b113-47a7-8dda-7791ed807b3c" />
+
+
 
 ---
 ##  Installation

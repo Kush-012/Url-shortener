@@ -1,87 +1,174 @@
-URL Shortener 
+# URL Shortener
 
-A simple and efficient URL Shortener built using Node.js, Express, MongoDB, and NanoID.
-This project allows users to shorten long URLs and redirect to the original link using a unique short ID.
+A simple and efficient URL Shortener built using **Node.js**, **Express.js**, and **MongoDB**.  
+Users can generate shortened URLs, which automatically redirect to the original links.  
+The project is lightweight, fast, and easy to deploy.
 
-Features
+---
 
-Generate short URLs using NanoID
+## Table of Contents
 
-Store and retrieve shortened URLs from MongoDB
+- [About the Project](#about-the-project)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-Instant redirection to the original link
+---
 
-REST API endpoints
+## 📘 About the Project
 
-Clean and minimal server structure
+This URL Shortener allows users to input long URLs and get a shortened, unique URL in return.  
+When the shortened URL is visited, it redirects to the original link.
 
-Project Structure
-url-shortener/
-│── controllers/
-│   └── url.js
-│── models/
-│   └── url.js
-│── routes/
-│   └── url.js
-│── .gitignore
-│── package.json
+This backend application is built with Express.js and connected to MongoDB.  
+It supports JSON requests and includes a clean route structure for easy expansion.
+
+---
+
+##  Features
+
+- 🔗 Shorten long URLs  
+- 🔁 Redirect short URLs to original URLs  
+- 🗂️ Organized routes and controllers  
+- ⚡ Fast and lightweight  
+- 🛢️ MongoDB-based storage  
+- 🔐 Environment variable support  
+- 🧩 Easy to deploy (Render, Vercel Server, Railway)
+
+---
+
+## Tech Stack
+
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB (MongoDB Atlas recommended)  
+- **Runtime:** Node.js
+- **Package Manager:** npm
+```
+/url-shortener
+│── /controllers
+│── /routes
+│── /models
+│── /public
+│── connect.js
 │── server.js
+│── package.json
+└── .env
+```
 
+---
+![Uploading image.png…]()
 
-🔧 Tech Stack
-Node.js
-Express.js
-MongoDB + Mongoose
-NanoID for short ID generation
+---
+##  Installation
 
-🛠️ Setup Instructions
 1️⃣ Clone the repository
+
+```
 git clone https://github.com/Kush-012/Url-shortener.git
 cd Url-shortener
-
+``` 
 2️⃣ Install dependencies
 npm install
 
 3️⃣ Create .env file
-MONGO_URI=your_mongodb_connection_string
-PORT=3000
+touch .env
 
-4️⃣ Start the server
-npm start
+4️⃣ Add environment variables 
+Create a .env file in the root directory and add:
+```
+mongodburl=your_mongodb_connection_string
+port=3000
+```
 
+
+---
+# Usage
+
+- Start the server:
+- npm start
 
 Server will run at:
-
+```
 http://localhost:3000
+```
 
-📌 API Endpoints
-➤ POST /url
+**API Endpoints**
+- Shorten URL
 
-Creates a short URL.
+**POST /url**
 
-Request Body:
+Body:
+```
 {
   "url": "https://example.com"
 }
+```
 
 Response:
+```
 {
-  "shortid": "xYz123Ab",
+  "shortid": "A1bC9dE",
 }
+```
+**GET /url/:shortid**
+```
+Redirect to Original URL
+```
 
-➤ GET /:shortid
+Automatically redirects to the original full URL.
+---
+# Deployment
 
-Redirects user to the original URL.
+You can deploy this backend on:
 
-Example:
+- Render
 
-http://localhost:3000/xYz123Ab
+- Railway
 
-🗂️ .gitignore (Important)
+- Vercel (Serverless)
 
-Make sure this file is present to avoid uploading unwanted folders:
+- Cyclic.sh
 
-node_modules/
-.env
+- Heroku (if available)
 
-🤝 Contributing
+**Ensure you configure**:
+
+- Environment variables
+- MongoDB connection
+- Public folder access
+---
+# Contributing
+
+- Contributions are welcome!
+- Fork the repo
+- Create a new branch
+- Commit your changes
+- Push and create a Pull Request
+
+---
+# License
+
+This project is licensed under the MIT License.
+
+# Contact
+
+Kush Mehta
+
+GitHub: https://github.com/Kush-012
+
+linkedin: www.linkedin.com/in/kushm1
+
+Email: kushmehta124@gmailcom  
+
+---
+
+
+

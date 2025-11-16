@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #eef1f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 380px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #222;
+            font-size: 22px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dcdcdc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #0b66ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0b66ff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-top: 14px;
+        }
+
+        button:hover {
+            background: #084bcc;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .short-url {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+            padding: 8px;
+            width: 100%;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ---------- TOAST NOTIFICATION ---------- */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            color: white;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(-20px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .toast-success {
+            background: #28a745;
+        }
+
+        .toast-error {
+            background: #e63946;
+        }
+    </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+    <h2>URL Shortener</h2>
+
+    <input type="text" id="urlInput" placeholder="Enter long URL (https://example.com)">
+    <button onclick="shortenUrl()">Generate Short URL</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+
+function showToast(message, type) {
+    const toast = document.getElementById("toast");
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+async function shortenUrl() {
+    const url = document.getElementById("urlInput").value.trim();
+    const resultDiv = document.getElementById("result");
+
+    resultDiv.innerHTML = "";
+
+    if (!url) {
+        showToast("Please enter a URL.", "error");
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3000/url", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url })
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+            showToast(data.error, "error");
+            return;
+        }
+
+        const shortUrl = `http://localhost:3000/url/${data.id}`;
+
+        resultDiv.innerHTML = `
+            <div class="short-url">
+                <a href="${shortUrl}" target="_blank">${shortUrl}</a>
+            </div>
+            <button class="copy-btn" onclick="copyText('${shortUrl}')">Copy</button>
+        `;
+
+        showToast("Short URL generated successfully.", "success");
+
+    } catch (err) {
+        showToast("Server error. Try again.", "error");
+    }
+}
+
+function copyText(text) {
+    navigator.clipboard.writeText(text);
+    showToast("Copied to clipboard.", "success");
+}
+
+</script>
+
+</body>
+</html>
